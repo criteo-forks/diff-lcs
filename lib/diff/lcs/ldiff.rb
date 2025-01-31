@@ -172,11 +172,11 @@ ldiff #{Diff::LCS::VERSION}
     end
 
     last = oldhunk.diff(format, true)
-    last << "\n" if last.respond_to?(:end_with?) && !last.end_with?("\n")
+    last << "\n" if last.respond_to?(:end_with?) && !last.end_with?("\n") && !last.empty?
 
     output << last
 
-    output.reverse_each { |e| real_output << e.diff(:ed_finish) } if format == :ed
+    output.reverse_each { |e| real_output << e.diff(:ed_finish, e == output[0]) } if format == :ed
 
     true
   end
